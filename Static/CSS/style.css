@@ -1,0 +1,16 @@
+.section-a {
+    margin-top: 20px;
+}
+
+.section-c {
+    margin-top: 20px;
+}
+
+.address-list {
+    overflow-y: scroll;
+    height: 560px;
+}
+      
+.img-container {
+    text-align: center;
+ }
