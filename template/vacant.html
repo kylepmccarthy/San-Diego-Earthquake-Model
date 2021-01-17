@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Musa 509 Skeleton Demo</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css') }}">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<style>
+.container {
+    max-width: 1280px;
+}
+</style>
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+
+</head>
+<body>
+    <section class="section hero section-a">
+        <div class="container">
+            <div class="row">
+                <h1><b><font size = "6"> Damage Caused by Earthquake Centered in Zip Code {{ nname }}</font></b></h1>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+          <div class="row">
+              <div class="six columns address-list">
+                  <table>
+                      <thead>
+                          <th>Zip Code</th>
+                          <th>Average Damage</th>
+                          <th>Sum Damage</th>
+                          <th>Total Asset Value</th>
+                      </thead>
+                      <tbody>
+                      {% for row in buildings %}
+                      <tr>
+                          {% for col in row %}
+                          {% if loop.index != 5 %}
+                              <td>{{ col }}</td>
+                          {% else %}
+                              <td></a></td>
+
+                          {% endif %}
+                          {% endfor %}
+
+                      </tr>
+                      {% endfor %}
+                      </tbody>
+                  </table>
+              </div>
+
+              <div class="six columns">
+                  <h6><ul><li>Total of <b>{{ num_buildings }}</b> Public Buildings of Poor or Fair Condition in San Diego</li>
+                    <li> Predicted <b>{{ damagecosts }}</b> dollars in  total building damage costs </li>
+                    <li> Predicted <b>{{ avgcosts }}</b> dollars in costs per public building on average </li>
+                    <li> There have been <b>{{ eq }}</b> signficant earthquakes in the zip code {{nname}} </li>
+                    <li> The largest recorded earthquake in the zip code {{nname}} was of <b>{{ eq_mag }}</b> magnitude </li></ul>
+                    <h5><b>  Sum of Damages by Zip Code
+                  {{ map_html|safe }}</b></h5>
+                  <h7>
+                    <ul style="list-style-type:none;">
+                      <li> DARK RED- HIGHEST DAMAGE ; YELLOW - LOWEST DAMAGE </li>
+                      <li> Note that only zip codes with expected damage appear in this map</li> </h7>
+                    </ul> 
+              </div>
+          </div>
+        </div>
+ 
+        <div class="container">
+            <div class="row">
+                  <div class="eight columns">
+                  <label> <font size="4">View Expected Damage for Individual Buildings in a neighborhood</font></label>  
+                  <form action="{{ url_for('Building_viewer') }}" method="get">
+                      <div> 
+                          <label>Earthquake Epicenter</label>
+                          <select class="u-full-width" name="epicenter">
+                              {% for nname in nnames %}
+                              <option value="{{ nname }}">{{ nname }}</option>
+                              {% endfor %}
+                          </select>
+                          <label>Neighborhood Name</label>
+                          <select class="u-full-width" name="ZIP">
+                              {% for neighborhood in neighborhoods %}
+                              <option value="{{ neighborhood }}">{{ neighborhood }}</option>
+                              {% endfor %}
+                          </select>
+                      </div>
+                      <input type="submit" value="Submit">
+                  </form>
+                  <a class="button button-primary" href="/">Go Back to View Zip Code statistics from another epicenter</a>
+                </div>
+                     
+                    </div>
+                    </div>
+
+    <div class="section hero">
+        <div class="container">
+            <div class="row">
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <div class="container">
+        </div>
+    </div>
+  </section>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>

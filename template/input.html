@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Earthquake Damage Calculator</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css') }}">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+
+</head>
+<body>
+
+    <div class="section hero">
+        <div class="container">
+            <div class="row">
+                <h1>Public Building Earthquake Damage Calculator - San Diego, CA </h1>
+            </div>
+        </div>
+        <div class = "container">
+         <div class="img-container">
+            <img src="https://images.squarespace-cdn.com/content/v1/526f5bfce4b0c67dab63847d/1484461656437-PC6W77HDHPR5DFQAV3V9/ke17ZwdGBToddI8pDm48kALaajfQgS-paRwa5q0SuOQUqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8N_N4V1vUb5AoIIIbLZhVYy7Mythp_T-mtop-vrsUOmeInPi9iDjx9w8K4ZfjXt2ductTWcnnWbcXdDlZ5m6mOwdecIsWo12IBiEf_YoeRh-pC969RuPXvt2ZwyzUXQf7Q/image-asset.jpeg?format=2500w" alt="San Diego"width="1000" height="200" style="text-align:left;margin:0px 0px"> 
+          </div>
+         </div>
+       </div>
+       <div class="section">
+        <div class="container">
+  <div class="row">
+      <div class="eight columns">
+
+            <div class="section">
+      <div class="eight columns">
+          <form action="{{ url_for('vacant_viewer') }}" method="get">
+              <div> 
+                  <label>Select a Zip Code as the Epicenter of a Hypothetical Future Earthquake</label>
+                  <select class="u-full-width" name="zipcode">
+                      {% for nname in nnames %}
+                      <option value="{{ nname }}">{{ nname }}</option>
+                      {% endfor %}
+                  </select>
+              </div>
+              <input type="submit" value="Submit">
+          </form>
+      </div>
+
+      <div class="four columns">
+      After selecting a zip code, estimated damage to all public buildings will be calculated.
+      </div>
+  </div>
+ </div>
+  </div>
+
+ <div class="row">
+      <div class="twelve columns">
+        <p><b>About This Data</b></p>
+          <p>The Rose Canyon fault in California runs through San Diego City. The fault was
+thought to be dormant for years resulting in woefully unprepared earthquake
+infrastructure in San Diego. Although the risk of a high magnitude earthquake is lower
+than cities surrounding the San Andreas Fault, the city's lack of earthquake ready
+infrastructure can severely damage San Diego. Recent studies have noted that the
+Rose Canyon fault has the potential to produce a 6.9 Magnitude Earthquake.
+Additionally, the San Andreas Fault, which runs through Eastern San Diego County, can
+also create a significant earthquake, resulting in moderate-light damage for San Diego
+City. This web application explores San Diego's earthquake readiness and the potential
+public building costs associated with a worst-case scenario Earthquake, here estimated
+to be magnitude 6.9. The California Earthquake Association states that such an earthquake will
+cost the city 40 billion dollars in damage. The web application asks for 
+a zip code within San Diego as an input.Once the zip code is chosen, a map of
+potential damage for San Diego is produced using the centroid of the selected zip code
+as the epicenter.</p>
+ <p>The public cost of a future earthquake is estimated by summing the expected
+damage to each public infrastructure site in the affected region. The damage to each
+infrastructure site is calculated as a function of three variables:
+<ol> 
+<li> The monetary cost/value of the infrastructure in question</li>
+<li> Earthquake intensity (a function of distance from the earthquake epicenter)</li>
+<li> The “shaking potential” of the infrastructure site’s location</li></ol>
+Earthquake intensity is determined as a function of distance away from the epicenter, 
+as well as the regions shakability score.  For this study, the distances used are the same as the
+average intensity distances from the epicenter of a similar 6.9 Earthquake outside San
+Jose in 1989. The associated damage with each subsequent distnace incrament is exponential. Each
+buffer will have half of the associated damage of the previous buffer. Based on each
+census tract's buffer region and shakability score, the earthquake risk associated with
+each census tract is determined.Based on the region's score, we will calculate the public building \
+repair cost for the entire region, and for each zip code. On this page we also allow the user the option to
+look examine statistics on past earthquakes in the chosen zip code. Finally, the user is given the option to
+examine the earthquake's impacts within a chosen zip code. On this page (page 3)
+a map displays of all the points of affected infrastructure and the estimated damage
+incurred by each. There is also be a table presented with this information as well.
+</p>
+<a href="https://www.earthquakeauthority.com/Blog/2020/Earthquake-Risk-in-San-Diego#:~:text=After%20a%20major%20earthquake%2C%20the,could%20be%20out%20for%20months.">Click this link to Learn More about San Diego's Earthquake Potential!</a>
+        </div>
+
+<video src="https://prd-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/atoms/video/IP-111037_Graves_RoseCanyon_video.mp4" controls
+width="500" height="300">
+  Video not supported
+</video>
+    </div>
+  </div>
+</div>
+
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>
