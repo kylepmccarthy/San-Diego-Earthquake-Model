@@ -1,0 +1,62 @@
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+<style>
+	#map { position: relative; width: 100%; height: 480px;}
+</style>
+<div id="map"></div>
+<script>
+    mapboxgl.accessToken = '{{ mapbox_token }}';
+    geojson = {{ geojson_str|safe }};
+
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+            center: [{{ center_lng }}, {{ center_lat }}],
+        zoom: 15
+    });
+    map.addControl(new mapboxgl.NavigationControl());
+    // Get map bounds
+    var coordinates = geojson.features[0].geometry.coordinates;
+    // var bounds = coordinates.reduce(function (bounds, coord) {
+    //         return bounds.extend(coord);
+    //     }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
+    bounds = {{ bounds|safe }};
+     
+    map.fitBounds(bounds, {
+            padding: 150
+        });
+    map.on('load', function () {
+        map.addSource('vacant', {
+            'type': 'geojson',
+            'data': geojson
+        });
+        map.addLayer({
+            'id': 'vacant',
+            'type': 'fill',
+            'source': 'vacant',
+            'layout': {
+            },
+            'paint': {
+                'fill-color': '#f0f'
+            },
+        });
+		// When a click event occurs on a feature in the states layer, open a popup at the
+		// location of the click, with description HTML from its properties.
+		map.on('click', 'vacant', function (e) {
+            new mapboxgl.Popup()
+            .setLngLat(e.lngLat)
+            .setHTML(e.features[0].properties.address)
+            .addTo(map);
+		});
+		 
+		// Change the cursor to a pointer when the mouse is over the states layer.
+		map.on('mouseenter', 'vacant', function () {
+            map.getCanvas().style.cursor = 'pointer';
+		});
+		 
+		// Change it back to a pointer when it leaves.
+		map.on('mouseleave', 'vacant', function () {
+            map.getCanvas().style.cursor = '';
+		});
+    });
+</script>
